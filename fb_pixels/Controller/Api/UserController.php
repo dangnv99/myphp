@@ -12,7 +12,6 @@ class UserController extends BaseController
     {
         $strErrorDesc = '';
         $requestMethod = $_SERVER["REQUEST_METHOD"];
-        //$arrQueryStringParams = $this->getQueryStringParams();
 
         if (strtoupper($requestMethod) == 'GET') {
             try {
@@ -32,11 +31,7 @@ class UserController extends BaseController
                 if (isset($_GET['limit']) && isset($_GET['current_page'])) {
                     $meta = $this->responseMeta($intLimit, $count, $current_page);
                 }
-                //echo  $count;
-                //die();
                 $arrUsers = $userModel->getPixels($intLimit);
-                //var_dump($arrUsers);
-                //$responseData = json_encode($arrUsers);
                 if (count((array)$arrUsers) > 0) {
                     $this->responseHandler($code = 200, $status = 'success', $arrUsers, $meta);
                 } else {

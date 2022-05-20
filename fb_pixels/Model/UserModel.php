@@ -44,8 +44,6 @@ class UserModel extends Database
     //Post Update
     public function postUpdate($id, $data)
     {
-        //echo $data->id;
-        //var_dump($data);
         return $this->update("UPDATE  fb_pixels SET $data where id = $id");;
     }
 }

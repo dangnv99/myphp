@@ -21,15 +21,6 @@ class BaseController
 
 
     /**
-     * Get querystring params.
-     */
-    protected function getQueryStringParams()
-    {
-        return parse_str($_SERVER['QUERY_STRING'], $query);
-    }
-
-
-    /**
      * Send Error.
      */
     protected function sendOutput($data, $httpHeaders = array())
