@@ -16,24 +16,19 @@ class PixelController extends BaseController
         if (strtoupper($requestMethod) == 'GET') {
             try {
                 $PixelModel = new PixelModel();
-                $intLimit = 0;
-                if (isset($_GET['limit'])) {
-                    $intLimit = $_GET['limit'];
-                }
-                $current_page = 0;
-                if (isset($_GET['current_page'])) {
-                    $current_page = $_GET['current_page'];
-                }
+                $current_page = isset($_GET['current_page']) ? $_GET['current_page'] : 1;
+                $intLimit = isset($_GET['intLimit']) ? $_GET['intLimit'] : 0;
+
                 $count = $PixelModel->getCount();
                 if ($intLimit <= 0) {
                     $intLimit = $count;
                 }
-                if (isset($_GET['limit']) && isset($_GET['current_page'])) {
-                    $meta = $this->responseMeta($intLimit, $count, $current_page);
-                }
+                $meta = new stdClass();
+                $meta = $this->responseMeta($intLimit, $count, $current_page);
+
                 $arrPixels = $PixelModel->getPixels($intLimit);
                 if (count((array)$arrPixels) > 0) {
-                    $this->responseHandler($code = 200, $status = 'success', $arrPixels, $meta);
+                    $this->responseHandler(200, 'success', $arrPixels, $meta);
                 } else {
                     $this->responseHandler($code = 422, $status = 'error', $arrPixels);
                 }
