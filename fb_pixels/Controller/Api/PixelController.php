@@ -16,21 +16,27 @@ class PixelController extends BaseController
         if (strtoupper($requestMethod) == 'GET') {
             try {
                 $PixelModel = new PixelModel();
-                $current_page = isset($_GET['current_page']) ? $_GET['current_page'] : 1;
-                $intLimit = isset($_GET['intLimit']) ? $_GET['intLimit'] : 0;
+                $check = $this->checkData($_GET, 2);
+                if (count((array)$check)  == 0) {
 
-                $count = $PixelModel->getCount();
-                if ($intLimit <= 0) {
-                    $intLimit = $count;
-                }
-                $meta = new stdClass();
-                $meta = $this->responseMeta($intLimit, $count, $current_page);
+                    $current_page = isset($_GET['current_page']) ? $_GET['current_page'] : 1;
+                    $intLimit = isset($_GET['limit']) ? $_GET['limit'] : 0;
 
-                $arrPixels = $PixelModel->getPixels($intLimit);
-                if (count((array)$arrPixels) > 0) {
-                    $this->responseHandler(200, 'success', $arrPixels, $meta);
+                    $count = $PixelModel->getCount();
+                    if ($intLimit <= 0) {
+                        $intLimit = $count;
+                    }
+                    $meta = new stdClass();
+                    $meta = $this->responseMeta($intLimit, $count, $current_page);
+
+                    $arrPixels = $PixelModel->getPixels($intLimit);
+                    if (count((array)$arrPixels) > 0) {
+                        $this->responseHandler(200, 'success', $arrPixels, $meta);
+                    } else {
+                        $this->responseHandler(422,  'error', $arrPixels);
+                    }
                 } else {
-                    $this->responseHandler($code = 422, $status = 'error', $arrPixels);
+                    $this->responseHandler(422, 'error', $check);
                 }
             } catch (Error $e) {
                 $strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
@@ -66,14 +72,16 @@ class PixelController extends BaseController
         if (strtoupper($requestMethod) == 'GET') {
             try {
                 $PixelModel = new PixelModel();
-                if (isset($_GET['shop']) && $_GET['pixel_id']) {
+                $check = $this->checkData($_GET, 3);
+                if (count((array)$check)  == 0) {
                     $arrPixels = $PixelModel->getDetail($_GET['shop'], $_GET['pixel_id']);
-                }
-
-                if (count((array)$arrPixels) > 0) {
-                    $this->responseHandler($code = 200, $status = 'success', $arrPixels);
+                    if (count((array)$arrPixels) > 0) {
+                        $this->responseHandler(200, 'success', $arrPixels);
+                    } else {
+                        $this->responseHandler(422,  'error', $arrPixels);
+                    }
                 } else {
-                    $this->responseHandler($code = 422, $status = 'error', $arrPixels);
+                    $this->responseHandler(422, 'error', $check);
                 }
             } catch (Error $e) {
                 $strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
@@ -108,17 +116,22 @@ class PixelController extends BaseController
         if (strtoupper($requestMethod) == 'POST') {
             try {
                 $PixelModel = new PixelModel();
-                $arrPixels = $PixelModel->postDelete($_GET['shop'], $_GET['pixel_id']); //pixel_id
-                if ($arrPixels) {
-                    $object = new stdClass();
-                    $object->pixel_id = $_GET['pixel_id'];
-                    $this->responseHandler($code = 200, $status = 'success', $object);
-                } else {
-                    $object = new stdClass();
-                    $object->pixel_id = "The Shop field is required!";
-                    $object->shop = "The Shop field is required!";
+                $check = $this->checkData($_GET, 3);
+                if (count((array)$check)  == 0) {
+                    $arrPixels = $PixelModel->postDelete($_GET['shop'], $_GET['pixel_id']); //pixel_id
+                    if ($arrPixels) {
+                        $object = new stdClass();
+                        $object->pixel_id = $_GET['pixel_id'];
+                        $this->responseHandler(200, 'success', $object);
+                    } else {
+                        $object = new stdClass();
+                        $object->pixel_id = "The Shop field is required!";
+                        $object->shop = "The Shop field is required!";
 
-                    $this->responseHandler($code = 422, $status = 'error', $object);
+                        $this->responseHandler(422, 'error', $object);
+                    }
+                } else {
+                    $this->responseHandler(422, 'error', $check);
                 }
             } catch (Error $e) {
                 $strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
@@ -187,12 +200,12 @@ class PixelController extends BaseController
                         $firstItem = array('id' => $arrPixels);
                         //$_POST = $firstItem + $_POST;
                         $arrdata = $PixelModel->getReturn($arrPixels);
-                        $this->responseHandler($code = 200, $status = 'success', $arrdata); //Post
+                        $this->responseHandler(200, 'success', $arrdata); //Post
                     } else {
                         echo "Error deleting record: " . $PixelModel->error;
                     }
                 } else {
-                    $this->responseHandler($code = 422, $status = 'error', $check);
+                    $this->responseHandler(422, 'error', $check);
                 }
                 //echo $id;
             } catch (Error $e) {
@@ -252,12 +265,12 @@ class PixelController extends BaseController
                     $arrPixels = $PixelModel->postUpdate($_POST['id'], rtrim($push, ","));
                     if ($arrPixels) {
                         $arrdata = $PixelModel->getReturn($_POST['id']);
-                        $this->responseHandler($code = 200, $status = 'success', $arrdata);
+                        $this->responseHandler(200, 'success', $arrdata);
                     } else {
                         echo "Error deleting record: " . $PixelModel->error;
                     }
                 } else {
-                    $this->responseHandler($code = 422, $status = 'error', $check);
+                    $this->responseHandler(422, 'error', $check);
                 }
             } catch (Error $e) {
                 $strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
