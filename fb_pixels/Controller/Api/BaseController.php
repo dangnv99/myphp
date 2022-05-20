@@ -99,29 +99,30 @@ class BaseController
     {
         $check = 0;
         $object = new stdClass();
-
+        // echo $option . "\n\r";
+        //echo $data;
         foreach ($data as $key => $val) {
             if ($option === 1) {
                 //echo 1 . "\n\r";
-                if (isset($_POST['shop']) && $key == 'shop' && ($val == null || empty($val) || $val === '')) {
+                if (!isset($_POST['shop']) || ($key == 'shop' && ($val == null || empty($val) || $val === ''))) {
                     //$data['shop']   = "The Shop field is required!";
                     $errors_shop = array();
                     $errors_shop = array_merge($errors_shop, array('The Shop field is required!'));
                     $object->shop = $errors_shop;
                     //echo array_values($data)[$n] . "\n\r";
                 }
-                if (isset($_POST['pixel_id']) && $key == 'pixel_id' && ($val == null || empty($val) || $val === '')) {
+                if (!isset($_POST['pixel_id']) || ($key == 'pixel_id' && ($val == null || empty($val) || $val === ''))) {
                     $errors_pixel_id = array();
                     $errors_pixel_id = array_merge($errors_pixel_id, array('The Shop field is required!'));
                     $object->pixel_id = $errors_pixel_id;
                 }
-                if (isset($_POST['pixel_title']) && $key == 'pixel_title' && ($val == null || empty($val) || $val === '')) {
+                if (!isset($_POST['pixel_title']) || ($key == 'pixel_title' && ($val == null || empty($val) || $val === ''))) {
 
                     $errors_pixel_title = array();
                     $errors_pixel_title = array_merge($errors_pixel_title, array('The Shop field is required!'));
                     $object->pixel_title = $errors_pixel_title;
                 }
-                if (isset($_POST['access_token']) && $key == 'access_token' && ($val == null || empty($val) || $val === '')) {
+                if (!isset($_POST['access_token']) || ($key == 'access_token' && ($val == null || empty($val) || $val === ''))) {
                     $errors_access_token = array();
                     $errors_access_token = array_merge($errors_access_token, array('The Shop field is required!'));
                     $object->pixel_title = $errors_access_token;
@@ -129,36 +130,49 @@ class BaseController
             }
 
             if ($option === 0) {
-                if (isset($_POST['id']) && $key == 'id' && ($val == null || empty($val) || $val === '')) {
+                if (!isset($_POST['id']) || ($key == 'id' && ($val == null || empty($val) || $val === ''))) {
 
                     $errors_shop = array();
                     $errors_shop = array_merge($errors_shop, array('The Shop field is required!'));
                     $object->id = $errors_shop;
                 }
             }
-            if ($option == 2) {
-                if (isset($_GET['current_page']) && $key == 'current_page' && ($val == null || empty($val) || $val === '')) {
+            if ($option === 2) {
+                if (!isset($_GET['current_page']) || ($key == 'current_page' && ($val == null || empty($val) || $val === ''))) {
                     $errors_current_page = array();
                     $errors_current_page = array_merge($errors_current_page, array('The Shop field is required!'));
                     $object->current_page = $errors_current_page;
                 }
-                if (isset($_GET['limit']) && $key == 'limit' && ($val == null || empty($val) || $val === '')) {
+                if (!isset($_GET['limit']) || ($key == 'limit' && ($val == null || empty($val) || $val === ''))) {
                     $errors_limit = array();
                     $errors_limit = array_merge($errors_limit, array('The Shop field is required!'));
                     $object->limit = $errors_limit;
                 }
             }
 
-            if ($option == 3) {
-                if (isset($_GET['shop']) && $key == 'shop' && ($val == null || empty($val) || $val === '')) {
+            if ($option === 3) {
+                if (!isset($_GET['shop']) || ($key == 'shop' && ($val == null || empty($val) || $val === ''))) {
                     $errors_shop = array();
                     $errors_shop = array_merge($errors_shop, array('The Shop field is required!'));
                     $object->current_page = $errors_shop;
                 }
-                if (isset($_GET['pixel_id']) && $key == 'pixel_id' && ($val == null || empty($val) || $val === '')) {
+                if (!isset($_GET['pixel_id']) || ($key == 'pixel_id' && ($val == null || empty($val) || $val === ''))) {
                     $errors_pixel_id = array();
                     $errors_pixel_id = array_merge($errors_pixel_id, array('The Shop field is required!'));
-                    $object->limit = $errors_pixel_id;
+                    $object->pixel_id = $errors_pixel_id;
+                }
+            }
+            if ($option === 4) {
+                //echo $option . "\n\r";
+                if (!isset($_POST['shop']) || ($key == 'shop' && ($val == null || empty($val) || $val === ''))) {
+                    $errors_shop = array();
+                    $errors_shop = array_merge($errors_shop, array('The Shop field is required!'));
+                    $object->current_page = $errors_shop;
+                }
+                if (!isset($_POST['pixel_id']) || ($key == 'pixel_id' && ($val == null || empty($val) || $val === ''))) {
+                    $errors_pixel_id = array();
+                    $errors_pixel_id = array_merge($errors_pixel_id, array('The Shop field is required!'));
+                    $object->pixel_id = $errors_pixel_id;
                 }
             }
         }

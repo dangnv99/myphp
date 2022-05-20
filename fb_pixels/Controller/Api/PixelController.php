@@ -116,7 +116,8 @@ class PixelController extends BaseController
         if (strtoupper($requestMethod) == 'POST') {
             try {
                 $PixelModel = new PixelModel();
-                $check = $this->checkData($_GET, 3);
+                $check = $this->checkData($_POST, 4);
+
                 if (count((array)$check)  == 0) {
                     $arrPixels = $PixelModel->postDelete($_GET['shop'], $_GET['pixel_id']); //pixel_id
                     if ($arrPixels) {
@@ -124,6 +125,7 @@ class PixelController extends BaseController
                         $object->pixel_id = $_GET['pixel_id'];
                         $this->responseHandler(200, 'success', $object);
                     } else {
+
                         $object = new stdClass();
                         $object->pixel_id = "The Shop field is required!";
                         $object->shop = "The Shop field is required!";
