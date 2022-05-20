@@ -160,17 +160,6 @@ class UserController extends BaseController
         if (strtoupper($requestMethod) == 'POST') {
             try {
                 $userModel = new UserModel();
-                $id =  mt_rand(10000000, 999999999);
-                //echo $id . "\n\r";
-                // $shop = isset($_POST['shop']) ? $_POST['shop'] : null;
-                // $pixel_id = isset($_POST['pixel_id']) ? $_POST['pixel_id'] : null;
-                // $pixel_title = isset($_POST['pixel_title']) ? $_POST['pixel_title'] : null;
-                // $status = isset($_POST['status']) ? $_POST['status'] : 0;
-                // $is_master = isset($_POST['is_master']) ? $_POST['is_master'] : 0;
-                // $is_conversion_api = isset($_POST['is_conversion_api']) ? $_POST['is_conversion_api'] : 0;
-                // $access_token = isset($_POST['access_token']) ? $_POST['access_token'] : null;
-                // // $created_at = isset($_POST['created_at']) ? $_POST['created_at'] : "";
-                // // $updated_at = isset($_POST['updated_at']) ? $_POST['updated_at'] : "";
                 $setData = array_values($_POST);
 
                 foreach ($setData as $key => $val) {
