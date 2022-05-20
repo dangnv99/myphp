@@ -116,8 +116,9 @@ class PixelController extends BaseController
         if (strtoupper($requestMethod) == 'POST') {
             try {
                 $PixelModel = new PixelModel();
-                $check = $this->checkData($_POST, 4);
-
+                $check = $this->checkData($_GET, 4);
+                //var_dump($check);
+                //die();
                 if (count((array)$check)  == 0) {
                     $arrPixels = $PixelModel->postDelete($_GET['shop'], $_GET['pixel_id']); //pixel_id
                     if ($arrPixels) {

@@ -164,12 +164,12 @@ class BaseController
             }
             if ($option === 4) {
                 //echo $option . "\n\r";
-                if (!isset($_POST['shop']) || ($key == 'shop' && ($val == null || empty($val) || $val === ''))) {
+                if (!isset($_GET['shop']) || ($key == 'shop' && ($val == null || empty($val) || $val === ''))) {
                     $errors_shop = array();
                     $errors_shop = array_merge($errors_shop, array('The Shop field is required!'));
-                    $object->current_page = $errors_shop;
+                    $object->shop = $errors_shop;
                 }
-                if (!isset($_POST['pixel_id']) || ($key == 'pixel_id' && ($val == null || empty($val) || $val === ''))) {
+                if (!isset($_GET['pixel_id']) || ($key == 'pixel_id' && ($val == null || empty($val) || $val === ''))) {
                     $errors_pixel_id = array();
                     $errors_pixel_id = array_merge($errors_pixel_id, array('The Shop field is required!'));
                     $object->pixel_id = $errors_pixel_id;
